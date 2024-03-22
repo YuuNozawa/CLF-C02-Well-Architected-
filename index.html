@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>CLF-C02 Well-Architected問題対策</title>
+    <!-- ReactのCDNからReactとReactDOMを読み込みます -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- BabelのCDNを利用してブラウザ上でJSXを使えるようにします -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div> <!-- Reactアプリケーションをこのdiv内にマウントします -->
+    <script type="text/babel">
+        function App() {
+            const [problemNumber, setProblemNumber] = React.useState(1);
+            const [showAnswer, setShowAnswer] = React.useState(false);
+            const [randomAnswers, setRandomAnswers] = React.useState([]);
+            const [currentProblem, setCurrentProblem] = React.useState({});
+
+            const allAnswers = [
+                {group: "運用上の優秀性", text: "運用をコードとして実行する"}, 
+                {group: "運用上の優秀性", text: "小規模かつ可逆的な変更を頻繁に行う"},
+                {group: "運用上の優秀性", text: "運用手順を定期的に改善する"},
+                {group: "運用上の優秀性", text: "障害を予想する"},
+                {group: "運用上の優秀性", text: "運用上のあらゆる障害から学ぶ"},
+                {group: "運用上の優秀性", text: "マネージドサービスを使用する"},
+                {group: "運用上の優秀性", text: "オブザーバビリティを実装して実用的なインサイトを得る"},
+                {group: "セキュリティ", text: "強力なアイデンティティ基盤を実装する"},
+                {group: "セキュリティ", text: "トレーサビリティの実現"},
+                {group: "セキュリティ", text: "全レイヤーでセキュリティを適用する"},
+                {group: "セキュリティ", text: "セキュリティのベストプラクティスを自動化する"},
+                {group: "セキュリティ", text: "伝送中および保管中のデータを保護する"},
+                {group: "セキュリティ", text: "データに人の手を入れない"},
+                {group: "セキュリティ", text: "セキュリティイベントに備える"},
+                {group: "信頼性", text: "障害から自動的に復旧する"},
+                {group: "信頼性", text: "復旧手順をテストする"},
+                {group: "信頼性", text: "水平方向にスケールしてワークロード全体の可用性を高める"},
+                {group: "信頼性", text: "キャパシティーを推測することをやめる"},
+                {group: "信頼性", text: "オートメーションで変更を管理する"},
+                {group: "パフォーマンス効率", text: "高度なテクノロジーを誰でも使えるようにする"},
+                {group: "パフォーマンス効率", text: "数分でグローバルに展開する"},
+                {group: "パフォーマンス効率", text: "サーバーレスアーキテクチャを使用する"},
+                {group: "パフォーマンス効率", text: "実験の頻度を高める"},
+                {group: "パフォーマンス効率", text: "メカニカルシンパシーを検討する"},
+                {group: "コスト最適化", text: "クラウド財務管理を実装する"},
+                {group: "コスト最適化", text: "消費モデルを導入する"},
+                {group: "コスト最適化", text: "全体的な効率を測定する"},
+                {group: "コスト最適化", text: "差別化につながらない高負荷の作業に費用をかけるのをやめる"},
+                {group: "コスト最適化", text: "費用を分析し帰属関係を明らかにする"},
+                {group: "サステナビリティ", text: "影響を理解する"},
+                {group: "サステナビリティ", text: "持続可能性の目標を設定する"},
+                {group: "サステナビリティ", text: "使用率を最大化する"},
+                {group: "サステナビリティ", text: "より効率的なハードウェアやソフトウェアの新製品を予測して採用する"},
+                {group: "サステナビリティ", text: "マネージドサービスを使用する"},
+                {group: "サステナビリティ", text: "クラウドワークロードのダウンストリームの影響を軽減する"},
+            ];
+            
+            const problems = [
+                { problemNumber: 1, 
+                  problem: "AWS Well-Architected Framework の設計原則の１つである運用上の優秀性に関連する内容はどれ？(2つ)", 
+                  group: "運用上の優秀性",
+                  answers: []
+                },
+                { problemNumber: 2, 
+                  problem: "AWS Well-Architected Framework の設計原則の１つであるセキュリティに関連する内容はどれ？(2つ)", 
+                  group: "セキュリティ",
+                  answers: []
+                },
+                { problemNumber: 3, 
+                  problem: "AWS Well-Architected Framework の設計原則の１つである信頼性に関連する内容はどれ？(2つ)", 
+                  group: "信頼性",
+                  answers: []
+                },
+                { problemNumber: 4, 
+                  problem: "AWS Well-Architected Framework の設計原則の１つであるパフォーマンス効率に関連する内容はどれ？(2つ)", 
+                  group: "パフォーマンス効率",
+                  answers: []
+                },
+                { problemNumber: 5, 
+                  problem: "AWS Well-Architected Framework の設計原則の１つであるコスト最適化に関連する内容はどれ？(2つ)", 
+                  group: "コスト最適化",
+                  answers: []
+                },
+                { problemNumber: 6, 
+                  problem: "AWS Well-Architected Framework の設計原則の１つであるサステナビリティに関連する内容はどれ？(2つ)", 
+                  group: "サステナビリティ",
+                  answers: []
+                }
+            ];
+
+            React.useEffect(() => {
+                updateRandomAnswers();
+            }, [problemNumber]);
+
+            const increment = () => {
+                setProblemNumber(prevNumber => Math.min(problems.length, prevNumber + 1));
+                setShowAnswer(false);
+                uncheck();
+            };
+
+            const decrement = () => {
+                setProblemNumber(prevNumber => Math.max(1, prevNumber - 1)); // 1より小さくならないように
+                setShowAnswer(false); 
+                uncheck();
+            };
+
+            const uncheck = () => {
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            }
+
+            const toggleShowAnswer = () => {
+                setShowAnswer(!showAnswer);
+            };
+
+            function selectRandomTexts(group, count) {
+                const filteredAnswers = allAnswers.filter(answer => answer.group === group);
+                const shuffled = shuffle([...filteredAnswers]);
+                return shuffled.slice(0, count).map(answer => answer.text);
+            }
+
+            function updateRandomAnswers() {
+                const problem = problems.find(p => p.problemNumber === problemNumber);
+
+                const answers = selectRandomTexts(problem.group, 2);
+                let answersToInclude = new Set(answers); // 現在の問題の答えをセットに追加
+                
+                let shuffledAnswers = shuffle(allAnswers.filter(answer => answer.group !== problem.group).map(answer => answer.text)); // 全選択肢をシャッフル
+                // 残りの選択肢を追加
+                shuffledAnswers.forEach(answer => {
+                    if (answersToInclude.size >= 5) return; // 既に5つの選択肢があれば終了
+                    answersToInclude.add(answer);
+                });
+
+                // セットを配列に変換し、最終的な選択肢のリストをシャッフルしてstateに設定
+                let finalAnswers = shuffle([...answersToInclude]);
+
+                setCurrentProblem({...problem, answers});
+                setRandomAnswers(finalAnswers.slice(0, 5));
+            }
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            return (
+                <div>
+                    <h2>問題: {problemNumber}</h2>
+                    <h3>{currentProblem ? currentProblem.problem : "問題がありません"}</h3>
+                    <br/>
+                    <div>
+                        {randomAnswers.map((answer, index) => (
+                            <div key={index}>
+                                <input type="checkbox" id={`answer${index}`} name="answers" value={answer} />
+                                <label htmlFor={`answer${index}`}>{answer}</label>
+                            </div>
+                        ))}
+                    </div>
+                    <br/>
+                    <div>
+                        <button onClick={decrement} disabled={problemNumber === 1}>前へ</button>&nbsp;
+                        <button onClick={toggleShowAnswer}>{showAnswer ? "答えを隠す" : "答えを表示"}</button>&nbsp;
+                        <button onClick={increment} disabled={problemNumber === problems.length}>次へ</button>
+                    </div>
+                    <br/>
+                    {showAnswer && currentProblem && (
+                        <div>
+                            {currentProblem.answers.map((answer, index) => (
+                                <React.Fragment key={index}>
+                                    {answer}{index < currentProblem.answers.length - 1 && <br />}
+                                </React.Fragment>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        // Reactコンポーネントをページにマウント
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
