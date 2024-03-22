@@ -1,0 +1,2 @@
+# CLF-C02-Well-Architected-
+AWS CLFのWellArchitectedFramework問題で、フレームワークの柱と設計原則の組み合わせを覚えられるように作成した一枚の静的ページです.
