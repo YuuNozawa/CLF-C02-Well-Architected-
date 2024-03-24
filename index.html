@@ -13,12 +13,58 @@
     <div id="root"></div> <!-- Reactアプリケーションをこのdiv内にマウントします -->
     <script type="text/babel">
         function App() {
-            const [problemNumber, setProblemNumber] = React.useState(1);
-            const [showAnswer, setShowAnswer] = React.useState(false);
-            const [randomAnswers, setRandomAnswers] = React.useState([]);
-            const [currentProblem, setCurrentProblem] = React.useState({});
 
-            const allAnswers = [
+            const CAFAnswers = [
+                {group: "ビジネス", text: "戦略管理"}, 
+                {group: "ビジネス", text: "ポートフォリオ管理"}, 
+                {group: "ビジネス", text: "イノベーションマネジメント"}, 
+                {group: "ビジネス", text: "製品管理"}, 
+                {group: "ビジネス", text: "戦略的パートナーシップ"}, 
+                {group: "ビジネス", text: "データの収益化"}, 
+                {group: "ビジネス", text: "ビジネスインサイト"}, 
+                {group: "ビジネス", text: "データサイエンス"}, 
+                {group: "人材", text: "文化の進化"}, 
+                {group: "人材", text: "トランスフォーメーションのリーダーシップ"}, 
+                {group: "人材", text: "クラウドフルエンシー"}, 
+                {group: "人材", text: "ワークフォースのトランスフォーメーション"}, 
+                {group: "人材", text: "変革の促進"}, 
+                {group: "人材", text: "組織設計"}, 
+                {group: "人材", text: "組織の連携"}, 
+                {group: "ガバナンス", text: "プログラムおよびプロジェクト管理"}, 
+                {group: "ガバナンス", text: "利益管理"}, 
+                {group: "ガバナンス", text: "リスク管理"}, 
+                {group: "ガバナンス", text: "クラウドの財務管理"}, 
+                {group: "ガバナンス", text: "アプリケーションポートフォリオ管理"}, 
+                {group: "ガバナンス", text: "データガバナンス"}, 
+                {group: "ガバナンス", text: "データキュレーション"}, 
+                {group: "プラットフォーム", text: "プラットフォームアーキテクチャ"}, 
+                {group: "プラットフォーム", text: "データアーキテクチャ"}, 
+                {group: "プラットフォーム", text: "プラットフォームエンジニアリング"}, 
+                {group: "プラットフォーム", text: "データエンジニアリング"}, 
+                {group: "プラットフォーム", text: "プロビジョニングとオーケストレーション"}, 
+                {group: "プラットフォーム", text: "モダンアプリケーション開発"}, 
+                {group: "プラットフォーム", text: "継続的インテグレーションと継続的デリバリー"}, 
+                {group: "セキュリティ", text: "セキュリティガバナンス"}, 
+                {group: "セキュリティ", text: "セキュリティ保証"}, 
+                {group: "セキュリティ", text: "アイデンティティおよび許可管理"}, 
+                {group: "セキュリティ", text: "脅威の検出"}, 
+                {group: "セキュリティ", text: "脆弱性管理"}, 
+                {group: "セキュリティ", text: "インフラストラクチャの保護"}, 
+                {group: "セキュリティ", text: "データ保護"}, 
+                {group: "セキュリティ", text: "アプリケーションのセキュリティ"}, 
+                {group: "セキュリティ", text: "インシデント対応"}, 
+                {group: "オペレーション", text: "可観測性"}, 
+                {group: "オペレーション", text: "イベント管理 (AIOps)"}, 
+                {group: "オペレーション", text: "インシデントおよび問題管理"}, 
+                {group: "オペレーション", text: "変更およびリリース管理"}, 
+                {group: "オペレーション", text: "パフォーマンスおよびキャパシティ管理"}, 
+                {group: "オペレーション", text: "構成管理"}, 
+                {group: "オペレーション", text: "パッチ管理"}, 
+                {group: "オペレーション", text: "可用性および継続性管理"}, 
+                {group: "オペレーション", text: "アプリケーション管理"}, 
+            ]
+
+            const WAAnswers = [
                 {group: "運用上の優秀性", text: "運用をコードとして実行する"}, 
                 {group: "運用上の優秀性", text: "小規模かつ可逆的な変更を頻繁に行う"},
                 {group: "運用上の優秀性", text: "運用手順を定期的に改善する"},
@@ -55,8 +101,41 @@
                 {group: "サステナビリティ", text: "マネージドサービスを使用する"},
                 {group: "サステナビリティ", text: "クラウドワークロードのダウンストリームの影響を軽減する"},
             ];
+
+            const CAFProblems = [
+                { problemNumber: 1, 
+                  problem: "AWSクラウド導入フレームワーク(CAF)のビジネスパースペクティブの機能はどれ？(2つ)", 
+                  group: "ビジネス",
+                  answers: []
+                },
+                { problemNumber: 2, 
+                  problem: "AWSクラウド導入フレームワーク(CAF)の人材パースペクティブの機能はどれ？(2つ)", 
+                  group: "人材",
+                  answers: []
+                },
+                { problemNumber: 3, 
+                  problem: "AWSクラウド導入フレームワーク(CAF)のガバナンスパースペクティブの機能はどれ？(2つ)", 
+                  group: "ガバナンス",
+                  answers: []
+                },
+                { problemNumber: 4, 
+                  problem: "AWSクラウド導入フレームワーク(CAF)のプラットフォームパースペクティブの機能はどれ？(2つ)", 
+                  group: "プラットフォーム",
+                  answers: []
+                },
+                { problemNumber: 5, 
+                  problem: "AWSクラウド導入フレームワーク(CAF)のセキュリティパースペクティブの機能はどれ？(2つ)", 
+                  group: "セキュリティ",
+                  answers: []
+                },
+                { problemNumber: 6, 
+                  problem: "AWSクラウド導入フレームワーク(CAF)のオペレーションパースペクティブの機能はどれ？(2つ)", 
+                  group: "オペレーション",
+                  answers: []
+                }
+            ]
             
-            const problems = [
+            const WAProblems = [
                 { problemNumber: 1, 
                   problem: "AWS Well-Architected Framework の設計原則の１つである運用上の優秀性に関連する内容はどれ？(2つ)", 
                   group: "運用上の優秀性",
@@ -89,20 +168,41 @@
                 }
             ];
 
+            const [problemNumber, setProblemNumber] = React.useState(1);
+            const [showAnswer, setShowAnswer] = React.useState(false);
+            const [randomAnswers, setRandomAnswers] = React.useState([]);
+            const [currentProblem, setCurrentProblem] = React.useState({});
+            const [currentMode, setCurrentMode] = React.useState("Well-Architected");
+            const [allAnswers, setAllAnswers] = React.useState([...WAAnswers]);
+            const [problems, setProblems] = React.useState([...WAProblems]);
+
             React.useEffect(() => {
                 updateRandomAnswers();
-            }, [problemNumber]);
+                setShowAnswer(false);
+                uncheck();
+            }, [problemNumber, currentMode]);
 
             const increment = () => {
                 setProblemNumber(prevNumber => Math.min(problems.length, prevNumber + 1));
-                setShowAnswer(false);
-                uncheck();
             };
 
             const decrement = () => {
                 setProblemNumber(prevNumber => Math.max(1, prevNumber - 1)); // 1より小さくならないように
-                setShowAnswer(false); 
-                uncheck();
+            };
+
+            const switchMode = () => {
+                setCurrentMode(prevMode => {
+                    if(prevMode !== "CAF"){
+                        setAllAnswers([...CAFAnswers]);
+                        setProblems([...CAFProblems]);
+                        return "CAF";
+                    } else {
+                        setAllAnswers([...WAAnswers]);
+                        setProblems([...WAProblems]);
+                        return "Well-Architected";
+                    }
+                });
+                setProblemNumber(1);
             };
 
             const uncheck = () => {
@@ -152,6 +252,7 @@
 
             return (
                 <div>
+                    <button onClick={switchMode}>{currentMode !== "CAF" ? "CAF問題へ" : "Well-Architected問題へ" }</button>
                     <h2>問題: {problemNumber}</h2>
                     <h3>{currentProblem ? currentProblem.problem : "問題がありません"}</h3>
                     <br/>

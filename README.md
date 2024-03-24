@@ -1,5 +1,7 @@
 # CLF-C02-Well-Architected-practice-quiz
 
+※追記: AWSクラウド導入フレームワーク(CAF)も対応しました。  
+
 以下から使えます  
 https://yuunozawa.github.io/CLF-C02-Well-Architected-practice-quiz/
 
